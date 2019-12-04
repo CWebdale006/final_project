@@ -1,0 +1,12 @@
+#one {
+    grid-template-rows: 100px auto;
+    grid-template-columns: 25% auto ;
+}
+
+#logo {
+    background-color: blue;
+}
+
+#links {
+    background-color: red;
+}
