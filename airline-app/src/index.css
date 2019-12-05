@@ -1,12 +1,40 @@
-#one {
-    grid-template-rows: 100px auto;
-    grid-template-columns: 25% auto ;
+/*CSS GRID STYLES*/
+.container {
+    display: grid;
+    /* background-color: red; */
 }
 
-#logo {
-    background-color: blue;
+.container#one {
+    grid-template: "logo nav1 nav2 nav3 ." 7vw / 25% 10% 10% 10% auto;
+    /* overflow: hidden; */
+    grid-column-gap: 5px;
+    justify-items: center;
+    align-items: end;
 }
 
-#links {
-    background-color: red;
+.container #logo {
+    grid-area: logo;
+    justify-self: start;
+    align-self: center;
+}
+
+.container #nav1 {
+    grid-area: nav1;
+}
+
+.container #nav2 {
+    grid-area: nav2;
+}
+
+.container #nav3 {
+    grid-area: nav3;
+}
+
+/*MAIN BODY STYLES*/
+body {
+    
+}
+
+img {
+    height: 100%;
 }

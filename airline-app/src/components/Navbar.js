@@ -1,6 +1,4 @@
 import React from 'react';
-import Image from 'react-bootstrap/Image';
-import Plane from '../airplane.jpeg';
 
 export default class Navbar extends React.Component {
   render() {
@@ -8,20 +6,20 @@ export default class Navbar extends React.Component {
       <>
       <div className="container" id="one">
         <div id="logo">
-          {/* <a href="http://localhost:3000/">
-            <Image src={Plane} />
-          </a> */}
+            <a href="http://localhost:3000/"><h2>EZAirplanes</h2></a>
         </div>
-        <div id='links'>
-          {/* links */}
+        <div id="nav1">
+          <a href="http://localhost:3000/">link 1</a>
+        </div>
+        <div id="nav2">
+          <a href="http://localhost:3000/">link 2</a>
+        </div>
+        <div id="nav3">
+          <a href="http://localhost:3000/">link 3</a>
         </div>
       </div>
       <style>{`
-      .container {
-        display: grid;
-      }
-      
-    
+
       `}</style>
       </>
     )

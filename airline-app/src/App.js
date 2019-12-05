@@ -3,6 +3,10 @@ import Navbar from './components/Navbar';
 import Body from './components/Body';
 import Footer from './components/Footer';
 
+(function() {
+    console.log("help")
+})();
+
 export class App extends React.Component {
     render() {
         return (
