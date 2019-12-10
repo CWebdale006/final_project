@@ -1,6 +1,13 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./css/App.css"
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import Navbar from "./components/navbar.component";
+import DestinationsList from "./components/destinations-list.component";
+import EditDestination from "./components/edit-destination.component";
+import CreateDestination from "./components/create-destination.component";
+import CreateUser from "./components/create-user.component";
 
 function App() {
   return (
