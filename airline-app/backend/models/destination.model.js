@@ -5,8 +5,9 @@ const destinationSchema = new Schema({
     from: { type: String, required: true },
     to: { type: String, required: true },
     departDate: { type: Date, required: true },
-    returnDate: { type: Date, required: true }
-    // roundTrip: { type: Boolean, required: true },
+    returnDate: { type: Date, required: true },
+    price: { type: Number },
+    // available: { type: Number },
 }, {
     timestamps: true,
 });

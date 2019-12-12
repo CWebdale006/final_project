@@ -29,7 +29,6 @@ export default class Mynav extends Component {
       <Nav className="mr-auto">
         <Link to="/" className="nav-link">Destinations</Link>
         <Link to="/create" className="nav-link">Book a flight</Link>
-        <Link to="/user" className="nav-link">Login</Link>
       </Nav>
        <Form inline>
           <Link to="/user" className="nav-link">

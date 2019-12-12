@@ -10,6 +10,13 @@ const userSchema = new Schema({
     trim: true,
     minlength: 3
   },
+  tickets: { type: Number, destination: {
+    from: { type: String, required: true },
+    to: { type: String, required: true },
+    departDate: { type: Date, required: true },
+    returnDate: { type: Date, required: true },
+    price: { type: Number },
+   }, },
 }, {
   timestamps: true,
 });
