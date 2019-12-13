@@ -2,7 +2,8 @@
 - [ ] Must be deployed using Glitch
 - [ ] Must have a polished responsive frontend 
   - [X] Must use a CSS Framework
-- [ ] Must utilize at least one new library, package, or technology that we haven't discussed 
+- [X] Must utilize at least one new library, package, or technology that we haven't discussed 
+  - react-datepicker
 - [ ] must meet good quality coding standards 
 
 ## 80% of grade requirements for project

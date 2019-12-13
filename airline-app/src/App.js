@@ -17,7 +17,7 @@ function App() {
       <Router>
         <div className='container'>
           <Navbar />
-          <br />
+          {/* <br /> */}
           {/* path sets the url path, and the component is the code that is loaded when the user goes to that path */}
           <Route path="/" exact component={DestinationsList} />
           <Route path="/edit/:id" component={EditDestination} />
@@ -27,7 +27,8 @@ function App() {
       </Router>
     </section>
     <section>
-      <SearchDestination />
+      {/*this'll be fun to fix  */}
+      {/* <SearchDestination /> */}
     </section>
     </>
   );
