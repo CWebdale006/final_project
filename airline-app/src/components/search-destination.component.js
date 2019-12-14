@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import "../css/navbar.css"
+import React, { Component } from 'react';
+import "../css/navbar.css";
 
 export default class SearchDestination extends Component {
   render() {

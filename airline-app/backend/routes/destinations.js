@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Destination = require('../models/destination.model');
+let Destination = require('../models/destination.model');
 
 // GET
 router.route('/').get((req, res) => {
@@ -11,17 +11,23 @@ router.route('/').get((req, res) => {
 // POST 
 // breaks all four fields from the data 
 router.route('/add').post((req, res) => {
+    const username = req.body.username;
     const from = req.body.from;
     const to = req.body.to;
     const departDate = req.body.departDate;
     const returnDate = req.body.returnDate;
+    const price = Number(req.body.price);
+    const amount = Number(req.body.amount);
 
     // gets the destination data, and creates a new Destination 
     const newDestination = new Destination({
+        username,
         from, 
         to, 
         departDate, 
         returnDate, 
+        price,
+        amount,
     });
 
     newDestination.save()
@@ -48,19 +54,23 @@ router.route('/update/:id').post((req, res) => {
     // retrieving old destination item
     Destination.findById(req.params.id)
 
-    // updating the destination to what is in the request body
-    .then(destination => {
-        destination.from = req.body.from;
-        destination.to = req.body.to;
-        destination.departDate = Date.parse(req.body.departDate);
-        destination.returnDate = Date.parse(req.body.returnDate);
+        // updating the destination to what is in the request body
+        .then(destination => {
+            destination.username = req.body.username;
+            destination.from = req.body.from;
+            destination.to = req.body.to;
+            destination.departDate = Date.parse(req.body.departDate);
+            destination.returnDate = Date.parse(req.body.returnDate);
+            destination.price = Number(req.body.price);
+            destination.amount = Number(req.body.amount);
 
-        // saves the updated destination to the database
-        destination.save()
-            .then(() => res.json('Destination updated!'))
-            .catch(err => res.status(400).json('Error: ' + err));
-    });
-})
+            // saves the updated destination to the database
+            destination.save()
+                .then(() => res.json('Destination updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
 
 
-module.exports = router
+module.exports = router;

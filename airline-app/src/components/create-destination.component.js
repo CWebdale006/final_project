@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -7,33 +8,59 @@ export default class CreateDestination extends Component {
     super(props);
   
     this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeFrom = this.onChangeFrom.bind(this);
     this.onChangeTo = this.onChangeTo.bind(this);
     this.onChangeDepartDate = this.onChangeDepartDate.bind(this);
     this.onChangeReturnDate = this.onChangeReturnDate.bind(this);
+    this.onChangePrice = this.onChangePrice.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       username: '',
+      from: '',
       to: '',
       departDate: new Date(),
       returnDate: new Date(),
+      price: '',
       amount: '',
       users: []
     }
   }
 
   // single user, eventually replaced with data from database
+  // componentDidMount() {
+  //   this.setState({
+  //     users: ['test user'],
+  //     username: 'test user'
+  //   });
+  // }
+
+  // data from database 
   componentDidMount() {
-    this.setState({
-      users: ['test user'],
-      username: 'test user'
-    });
+    axios.get('http://localhost:5000/users/')
+      .then(response => {
+        if (response.data.length > 0) {
+          this.setState({
+            users: response.data.map(user => user.username),
+            username: response.data[0].username
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
   
   onChangeUsername(e) {
     this.setState({
       username: e.target.value
+    });
+  }
+
+  onChangeFrom(e) {
+    this.setState({
+      from: e.target.value
     });
   }
 
@@ -55,6 +82,12 @@ export default class CreateDestination extends Component {
     });
   }
 
+  onChangePrice(e) {
+    this.setState({
+      price: e.target.value
+    })
+}
+
   onChangeAmount(e) {
     this.setState({
       amount: e.target.value
@@ -62,17 +95,22 @@ export default class CreateDestination extends Component {
   }
 
   onSubmit(e) {
-    e.preventDefault(false);
+    e.preventDefault();
 
-    const exercise = {
+    const destination = {
       username: this.state.username,
+      from: this.state.from, 
       to: this.state.to,
       departDate: this.state.departDate,
       returnDate: this.state.returnDate,
+      price: this.state.price,
       amount: this.state.amount,
     };
 
-    console.log(exercise);
+    console.log(destination);
+
+    axios.post('http://localhost:5000/destinations/add', destination)
+    .then(res => console.log(res.data));
 
     // window.location = '/create';
   }
