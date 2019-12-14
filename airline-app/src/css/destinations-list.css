@@ -3,7 +3,13 @@
 }
 
 .list-group a {
-    height: 15vh;
+    height: 10vh;
+    background-color: rgba(124, 124, 124, 0.315);
+    border-radius: 10px;
+}
+
+#bruh {
+    border-radius: 10px;
 }
 
 .col .card {

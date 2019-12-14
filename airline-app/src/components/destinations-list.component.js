@@ -6,7 +6,6 @@ export default class DestinationsList extends Component {
     return (
       <>
         <div>
-            {/* have fun using subgrids */}
             <div className="container">
               <div className="row">
                 <div className="col">
@@ -16,11 +15,11 @@ export default class DestinationsList extends Component {
               <div className="row">
                 <div className="col">
                       <div className="list-group">
-                        <a href="/create" className="list-group-item list-group-item-action">Buffalo, New York</a>
-                        <a href="/create" className="list-group-item list-group-item-action">Los Angeles, California</a>
-                        <a href="/create" className="list-group-item list-group-item-action">Morbi leo risus</a>
-                        <a href="/create" className="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                        <a href="/create" className="list-group-item list-group-item-action">Vestibulum at eros</a>
+                        <a href="/create" className="list-group-item list-group-item-action" id="bruh">Buffalo, New York</a>
+                        <a href="/create" className="list-group-item list-group-item-action" id="bruh">Los Angeles, California</a>
+                        <a href="/create" className="list-group-item list-group-item-action" id="bruh">Morbi leo risus</a>
+                        <a href="/create" className="list-group-item list-group-item-action" id="bruh">Porta ac consectetur ac</a>
+                        <a href="/create" className="list-group-item list-group-item-action" id="bruh">Vestibulum at eros</a>
                       </div>
                 </div>
                 <div className="col">

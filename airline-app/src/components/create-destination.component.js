@@ -73,8 +73,8 @@ export default class CreateDestination extends Component {
     };
 
     console.log(exercise);
-    console.log("bruh");
-    window.location = '/create';
+
+    // window.location = '/create';
   }
 
   render() {
