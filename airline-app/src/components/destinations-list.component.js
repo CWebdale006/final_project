@@ -100,8 +100,8 @@ export default class DestinationsList extends Component {
           <thead className="thead-light">
             <tr>
               <th>Username</th>
-              <th>To</th>
               <th>From</th>
+              <th>To</th>
               <th>Depart Date</th>
               <th>Return Date</th>
               <th>Price</th>

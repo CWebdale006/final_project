@@ -86,7 +86,7 @@ export default class CreateDestination extends Component {
     this.setState({
       price: e.target.value
     })
-}
+  }
 
   onChangeAmount(e) {
     this.setState({
@@ -116,7 +116,7 @@ export default class CreateDestination extends Component {
   }
 
   render() {
-    let bruh = "9.00";
+    let price = "9.00";
     return (
       <>
         <div className="card" id="hehe">
@@ -152,7 +152,7 @@ export default class CreateDestination extends Component {
                               className="form-control"
                               value={this.state.from}
                               onChange={this.onChangeFrom}
-                              />
+                          />
                       </div>
                       <div className="form-group"> 
                         <label>To: </label>
@@ -161,7 +161,7 @@ export default class CreateDestination extends Component {
                               className="form-control"
                               value={this.state.to}
                               onChange={this.onChangeTo}
-                              />
+                          />
                       </div>
                       <div className="form-group"> 
                         <label>Depart date: </label>
@@ -183,7 +183,7 @@ export default class CreateDestination extends Component {
                       </div>
                       <div className="form-group"> 
                         <label>Price: </label>
-                          <p id="ticketPrice">${bruh}</p>
+                          <p id="ticketPrice">${price}</p>
                       </div>
                       <div className="form-group"> 
                         <label>Amount: </label>
