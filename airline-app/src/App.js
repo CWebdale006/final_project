@@ -8,7 +8,8 @@ import DestinationsList from "./components/destinations-list.component";
 import EditDestination from "./components/edit-destination.component";
 import CreateDestination from "./components/create-destination.component";
 import CreateUser from "./components/create-user.component";
-import SearchDestination from "./components/search-destination.component"
+import SearchDestination from "./components/search-destination.component";
+import Footer from "./components/footer.component";
 
 function App() {
   return (
@@ -23,12 +24,15 @@ function App() {
           <Route path="/edit/:id" component={EditDestination} />
           <Route path="/create" component={CreateDestination} />
           <Route path="/user" component={CreateUser} />
-          </div>
+        </div>
       </Router>
     </section>
     <section>
       {/*this'll be fun to fix  */}
-      {/* <SearchDestination /> */}
+      <SearchDestination />
+    </section>
+    <section>
+      <Footer />
     </section>
     </>
   );

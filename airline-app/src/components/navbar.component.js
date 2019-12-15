@@ -5,6 +5,11 @@ import '../css/navbar.css'
 
 export default class Mynav extends Component {
   render() {
+    let addClass = (e) => {
+      const link = e.target;
+      console.log(link)
+    }
+
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Brand href="/">EZAirplanes</Navbar.Brand>
@@ -12,10 +17,10 @@ export default class Mynav extends Component {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto" defaultActiveKey="/">
             <Nav.Item>
-              <Link to="/" className="nav-link">Destinations</Link>
+              <Link to="/" className="nav-link" id="navEffect" onClick={addClass}>Destinations</Link>
             </Nav.Item>
             <Nav.Item>
-              <Link to="/create" className="nav-link">Book a flight</Link>
+              <Link to="/create" className="nav-link" id="navEffect" onClick={addClass}>Book a flight</Link>
             </Nav.Item>
           </Nav>
           <Form inline>
