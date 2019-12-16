@@ -50,6 +50,14 @@ export default class CreateDestination extends Component {
       .catch((error) => {
         console.log(error);
       })
+    // axios.get('http://localhost:5000/destinations/')
+    //   .then(response => {
+    //     if(response.data.length >0 ) {
+    //       this.setState({
+    //         destinations: response.data.map(to => destination.to),
+    //       })
+    //     }
+    //   })
   }
   
   onChangeUsername(e) {
@@ -116,7 +124,7 @@ export default class CreateDestination extends Component {
   }
 
   render() {
-    let price = "9.00";
+    let price = this.state.onChangePrice;
     return (
       <>
         <div className="card" id="hehe">

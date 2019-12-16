@@ -1,19 +1,25 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
 
-// handles GET requests 
+// handles GET requests
 router.route('/').get((req, res) => {
   User.find()
     .then(users => res.json(users))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// handles POST requests 
+// handles POST requests, breaking down three fields 
 router.route('/add').post((req, res) => {
   const username = req.body.username;
+  const password = req.body.password;
+  const tickets = req.body.tickets;
 
   // gets username, and creates a new instance of User
-  const newUser = new User({username});
+  const newUser = new User({
+    username,
+    password,
+    tickets,
+  });
 
   newUser.save()
     .then(() => res.json('User added!'))
