@@ -14,7 +14,7 @@ const Destination = props => (
     <td>
       {/*first link goes to the edit route, second calls the delete method */}
       {/* <Link to={"/edit/"+props.destination._id}>edit</Link> | <a href="#" onClick={() => { props.deleteDestination(props.destination._id) }}>delete</a> */}
-      <a href="#">Purchase</a>
+      <Link to={'/edit/'+props.destination._id}>Purchase</Link>
     </td>
   </tr>
 )

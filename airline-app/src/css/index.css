@@ -12,3 +12,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#toLabel {
+  display: inline;
+  width: 30%;
+}
+
+#amountInput {
+  width: 10%;
+}

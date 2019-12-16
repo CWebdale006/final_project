@@ -8,6 +8,7 @@ export default class CreateDestination extends Component {
     super(props);
   
     this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeFrom = this.onChangeFrom.bind(this);
     this.onChangeTo = this.onChangeTo.bind(this);
     this.onChangeDepartDate = this.onChangeDepartDate.bind(this);
@@ -18,6 +19,7 @@ export default class CreateDestination extends Component {
 
     this.state = {
       username: '',
+      password: '',
       from: '',
       to: '',
       departDate: new Date(),
@@ -43,27 +45,26 @@ export default class CreateDestination extends Component {
         if (response.data.length > 0) {
           this.setState({
             users: response.data.map(user => user.username),
-            username: response.data[0].username
+            username: response.data[0].username,
+            password: response.data.map(password => password.password)
           });
         }
       })
       .catch((error) => {
         console.log(error);
       })
-    // axios.get('http://localhost:5000/destinations/')
-    //   .then(response => {
-    //     if(response.data.length >0 ) {
-    //       this.setState({
-    //         destinations: response.data.map(to => destination.to),
-    //       })
-    //     }
-    //   })
   }
   
   onChangeUsername(e) {
     this.setState({
       username: e.target.value
     });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    })
   }
 
   onChangeFrom(e) {
@@ -107,6 +108,7 @@ export default class CreateDestination extends Component {
 
     const destination = {
       username: this.state.username,
+      password: this.state.password,
       from: this.state.from, 
       to: this.state.to,
       departDate: this.state.departDate,
@@ -152,6 +154,14 @@ export default class CreateDestination extends Component {
                               })
                             }
                         </select>
+                      </div>
+                      <div className="form-group"> 
+                        <label>Password: </label>
+                          <input  type="text"
+                              required
+                              className="form-control"
+                              onChange={this.onChangePassword}
+                          />
                       </div>
                       <div className="form-group"> 
                         <label>From: </label>

@@ -42,6 +42,8 @@ export default class CreateUser extends Component {
       username: '',
       password: ''
     })
+
+    alert("User added!");
   }
 
   render() {

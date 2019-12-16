@@ -26,4 +26,21 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// updates an existing destination item
+router.route('/update/:id').post((req, res) => {
+  // retrieving old destination item
+  User.findById(req.params.id)
+
+      // updating the destination to what is in the request body
+      .then(user => {
+          user.tickets = req.body.tickets;
+
+          // saves the updated destination to the database
+          user.save()
+              .then(() => res.json('Tickets booked!'))
+              .catch(err => res.status(400).json('Error: ' + err));
+      })
+      .catch(err => res.status(400).json('Error: ' + err));
+});
+
 module.exports = router;

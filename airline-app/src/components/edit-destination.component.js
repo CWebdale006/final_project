@@ -8,21 +8,17 @@ export default class EditDestination extends Component {
     super(props);
   
     this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeFrom = this.onChangeFrom.bind(this);
-    this.onChangeTo = this.onChangeTo.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeDepartDate = this.onChangeDepartDate.bind(this);
     this.onChangeReturnDate = this.onChangeReturnDate.bind(this);
-    this.onChangePrice = this.onChangePrice.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
       username: '',
-      from: '',
-      to: '',
+      password: [],
       departDate: new Date(),
       returnDate: new Date(),
-      price: '',
       amount: '',
       users: []
     }
@@ -32,13 +28,11 @@ export default class EditDestination extends Component {
     axios.get('http://localhost:5000/destinations/'+this.props.match.params.id)
       .then(response => {
         this.setState({
-          username: response.data.username, 
           from: response.data.from, 
           to: response.data.to, 
           departDate: new Date(response.data.departDate),
           returnDate: new Date(response.data.returnDate),
-          price: response.data.price,
-          amount: response.data.amount
+          price: response.data.price
         })
       })
       .catch(function (error) {
@@ -48,7 +42,8 @@ export default class EditDestination extends Component {
       axios.get('http://localhost:5000/users/')
         .then(response => {
           this.setState({
-            users: response.data.map(user => user.username)
+            users: response.data.map(user => user.username),
+            password: response.data.forEach((us) => {return (us.username === this.state.username ? us.password : null )})
           });
         })
         .catch((error) => {
@@ -63,16 +58,10 @@ export default class EditDestination extends Component {
     });
   }
 
-  onChangeFrom(e) {
+  onChangePassword(e) {
     this.setState({
-      from: e.target.value
-    });
-  }
-
-  onChangeTo(e) {
-    this.setState({
-      to: e.target.value
-    });
+      password: e.target.value
+    })
   }
   
   onChangeDepartDate(date) {
@@ -87,12 +76,6 @@ export default class EditDestination extends Component {
     });
   }
 
-  onChangePrice(e) {
-    this.setState({
-      price: e.target.value
-    })
-  }
-
   onChangeAmount(e) {
     this.setState({
       amount: e.target.value
@@ -102,8 +85,9 @@ export default class EditDestination extends Component {
   onSubmit(e) {
     e.preventDefault();
 
-    const destination = {
+    const user = {
       username: this.state.username,
+      password: this.state.password,
       from: this.state.from, 
       to: this.state.to,
       departDate: this.state.departDate,
@@ -112,9 +96,9 @@ export default class EditDestination extends Component {
       amount: this.state.amount,
     };
 
-    console.log(destination);
+    console.log(user);
 
-    axios.post('http://localhost:5000/destinations/update/'+this.props.match.params.id, destination)
+    axios.post('http://localhost:5000/users/update/'+this.props.match.params.id, user)
       .then(res => console.log(res.data));
 
     // window.location = '/create';
@@ -150,6 +134,7 @@ export default class EditDestination extends Component {
               className="form-control"
               value={this.state.from}
               onChange={this.onChangeFrom}
+              readOnly
             />
           </div>
           <div className="form-group"> 
@@ -159,6 +144,7 @@ export default class EditDestination extends Component {
                 className="form-control"
                 value={this.state.to}
                 onChange={this.onChangeTo}
+                readOnly
               />
           </div>
           <div className="form-group"> 
@@ -183,9 +169,11 @@ export default class EditDestination extends Component {
             <label>Price: </label>
               <p id="ticketPrice">${price}</p>
           </div>
-          <div className="form-group"> 
+          <div className="form-group" id="amountInput"> 
             <label>Amount: </label>
-            <input  type="text"
+            <input  type="number"
+                min="0"
+                max="20"
                 required
                 className="form-control"
                 value={this.state.amount}
