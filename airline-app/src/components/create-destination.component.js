@@ -185,7 +185,7 @@ export default class CreateDestination extends Component {
                         <label>Depart date: </label>
                         <div>
                           <DatePicker 
-                            selected={this.state.date}
+                            selected={this.state.departDate}
                             onChange={this.onChangeDepartDate}
                           />
                         </div>
@@ -194,7 +194,7 @@ export default class CreateDestination extends Component {
                         <label>Return date: </label>
                         <div>
                           <DatePicker 
-                            selected={this.state.date}
+                            selected={this.state.returnDate}
                             onChange={this.onChangeReturnDate}
                           />
                         </div>

@@ -16,7 +16,8 @@ export default class EditDestination extends Component {
 
     this.state = {
       username: '',
-      password: [],
+      password: '',
+      passwords: [],
       departDate: new Date(),
       returnDate: new Date(),
       amount: '',
@@ -43,7 +44,7 @@ export default class EditDestination extends Component {
         .then(response => {
           this.setState({
             users: response.data.map(user => user.username),
-            password: response.data.forEach((us) => {return (us.username === this.state.username ? us.password : null )})
+            passwords: response.data.map(user => user.password),
           });
         })
         .catch((error) => {
@@ -151,7 +152,7 @@ export default class EditDestination extends Component {
             <label>Depart date: </label>
             <div>
               <DatePicker 
-                selected={this.state.date}
+                selected={this.state.departDate}
                 onChange={this.onChangeDepartDate}
               />
             </div>
@@ -160,7 +161,7 @@ export default class EditDestination extends Component {
             <label>Return date: </label>
             <div>
               <DatePicker 
-                selected={this.state.date}
+                selected={this.state.returnDate}
                 onChange={this.onChangeReturnDate}
               />
             </div>
