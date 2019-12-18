@@ -26,13 +26,22 @@ router.route('/add').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// updates an existing destination item
+// deletes a user given an id
+router.route('/:id').delete((req, res) => {
+  User.findByIdAndDelete(req.params.id)
+  .then(() => res.json('User successfully deleted.'))
+  .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// adds tickets to a user
 router.route('/update/:id').post((req, res) => {
   // retrieving old destination item
   User.findById(req.params.id)
 
       // updating the destination to what is in the request body
       .then(user => {
+          user.username = req.body.username;
+          user.password = req.body.password;
           user.tickets = req.body.tickets;
 
           // saves the updated destination to the database

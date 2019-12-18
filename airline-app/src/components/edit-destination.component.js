@@ -88,7 +88,7 @@ export default class EditDestination extends Component {
     const user = {
       username: this.state.username,
       password: this.state.password,
-      tickets: [this.state.from, this.state.to, this.state.departDate, this.state.returnDate, this.state.price]
+      tickets: [this.state.from, this.state.to, this.state.departDate, this.state.returnDate, this.state.price, this.state.amount]
     };
 
     console.log(user);
@@ -100,7 +100,7 @@ export default class EditDestination extends Component {
   }
 
   render() {
-    let price = "9.00";
+    let price = this.state.price;
     return (
       <>
         <div>
@@ -177,7 +177,7 @@ export default class EditDestination extends Component {
           </div>
 
           <div className="form-group">
-            <input type="submit" value="Edit Exercise Log" className="btn btn-primary" />
+            <input type="submit" value="Book tickets" className="btn btn-primary" />
           </div>
         </form>
       </div>
