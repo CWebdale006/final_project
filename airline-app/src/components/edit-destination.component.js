@@ -20,7 +20,6 @@ export default class EditDestination extends Component {
       passwords: [],
       departDate: new Date(),
       returnDate: new Date(),
-      amount: '',
       users: []
     }
   }
@@ -89,12 +88,7 @@ export default class EditDestination extends Component {
     const user = {
       username: this.state.username,
       password: this.state.password,
-      from: this.state.from, 
-      to: this.state.to,
-      departDate: this.state.departDate,
-      returnDate: this.state.returnDate,
-      price: this.state.price,
-      amount: this.state.amount,
+      tickets: [this.state.from, this.state.to, this.state.departDate, this.state.returnDate, this.state.price]
     };
 
     console.log(user);
