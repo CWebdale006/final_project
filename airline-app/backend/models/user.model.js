@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
+  // give username properties of: username, password, and tickets?
   username: {
     type: String,
     required: true,

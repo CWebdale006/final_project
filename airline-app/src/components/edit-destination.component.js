@@ -8,6 +8,7 @@ export default class EditDestination extends Component {
     super(props);
   
     this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangeId = this.onChangeId.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeDepartDate = this.onChangeDepartDate.bind(this);
     this.onChangeReturnDate = this.onChangeReturnDate.bind(this);
@@ -16,6 +17,7 @@ export default class EditDestination extends Component {
 
     this.state = {
       username: '',
+      id: '',
       password: '',
       passwords: [],
       departDate: new Date(),
@@ -44,6 +46,7 @@ export default class EditDestination extends Component {
           this.setState({
             users: response.data.map(user => user.username),
             passwords: response.data.map(user => user.password),
+            ids: response.data.map(user => user._id)
           });
         })
         .catch((error) => {
@@ -58,10 +61,16 @@ export default class EditDestination extends Component {
     });
   }
 
+  onChangeId(e) {
+    this.setState({
+      id: e.target.id
+    });
+  }
+
   onChangePassword(e) {
     this.setState({
       password: e.target.value
-    })
+    });
   }
   
   onChangeDepartDate(date) {
@@ -87,12 +96,14 @@ export default class EditDestination extends Component {
 
     const user = {
       username: this.state.username,
-      password: this.state.password,
+      password: this.state.passwords,
+      id: this.state.ids,
       tickets: [this.state.from, this.state.to, this.state.departDate, this.state.returnDate, this.state.price, this.state.amount]
     };
 
     console.log(user);
 
+    // 
     axios.post('http://localhost:5000/users/update/'+this.props.match.params.id, user)
       .then(res => console.log(res.data));
 
