@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { useAuth0 } from "../react-auth0-spa";
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Form, Button } from 'react-bootstrap';
 import '../css/navbar.css'
 
-export default class Mynav extends Component {
-  render() {
+const Mynav = () => {
+    const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
     let addClass = (e) => {
       const link = e.target;
       console.log(link)
@@ -24,12 +26,23 @@ export default class Mynav extends Component {
             </Nav.Item>
           </Nav>
           <Form inline>
-            <Link to="/user" className="nav-link">
-              <Button variant="primary"> Sign up</Button>
-            </Link>
+              <div>
+                {!isAuthenticated && (
+                  <button onClick={() => loginWithRedirect({})}>Log in</button>
+                )}
+
+                {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
+
+                {isAuthenticated && (
+                  <span>
+                    <Link to="/profile">Profile</Link>
+                  </span>
+                )}
+              </div>
           </Form>
         </Navbar.Collapse>
       </Navbar>
       );
-  }
 }
+
+export default Mynav;

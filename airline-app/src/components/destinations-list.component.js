@@ -4,6 +4,19 @@ import axios from 'axios';
 import "../css/destinations-list.css";
 import { round } from 'mathjs';
 
+// auth0
+import { useAuth0 } from "../react-auth0-spa";
+
+const Profile = () => {
+  const { loading, user } = useAuth0();
+
+  if (loading || !user) {
+    return <div>Loading...</div>
+  }
+}
+
+let topText = "Book your flight";
+
 const Destination = props => (
   <tr id={props.destination.to}>
     <td>{props.destination.from}</td>
@@ -119,7 +132,7 @@ export default class DestinationsList extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <h1 className="display-4">Book your flight</h1>
+                <h1 className="display-4">{topText}</h1>
               </div>
             </div>
             <div className="row">
