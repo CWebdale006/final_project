@@ -17,14 +17,9 @@ import { useAuth0 } from "./react-auth0-spa";
     import { Switch } from "react-router-dom";
     import Profile from "./components/Profile.component";
     import history from "./utils/history";
+    import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  const { loading } = useAuth0();
-  
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
     <section>
@@ -38,7 +33,7 @@ function App() {
             <Route path="/edit/:id" component={EditDestination} />
             <Route path="/create" component={CreateDestination} />
             <Route path="/user" component={CreateUser} />
-            <Route path="/profile" component={Profile} />
+            <PrivateRoute path="/profile" component={Profile} />
           </Switch>
         </div>
       </Router>

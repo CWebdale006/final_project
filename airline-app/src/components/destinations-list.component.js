@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "../css/destinations-list.css";
@@ -126,13 +126,28 @@ export default class DestinationsList extends Component {
   }
 
   render() {
+    const HeaderText = () => {
+      const { loading, user, isAuthenticated } = useAuth0();
+
+      if (loading || !user) {
+        return <div>Book a flight</div>;
+      }
+
+      return (
+        <Fragment>
+          Welcome, {user.name}!
+        </Fragment>
+      )
+    }
     return(
       <>
         <div>
           <div className="container">
             <div className="row">
               <div className="col">
-                <h1 className="display-4">{topText}</h1>
+                <h1 className="display-4">
+                  <HeaderText />
+                </h1>
               </div>
             </div>
             <div className="row">

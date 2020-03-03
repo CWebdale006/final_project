@@ -28,16 +28,16 @@ const Mynav = () => {
           <Form inline>
               <div>
                 {!isAuthenticated && (
-                  <button onClick={() => loginWithRedirect({})}>Log in</button>
+                  <button type="button" class="btn btn-primary" onClick={() => loginWithRedirect({})}>Log in</button>
                 )}
-
-                {isAuthenticated && <button onClick={() => logout()}>Log out</button>}
 
                 {isAuthenticated && (
                   <span>
-                    <Link to="/profile">Profile</Link>
+                    <button type="button" class="btn btn-primary"><Link id="link" to="/profile">Profile</Link></button>
                   </span>
                 )}
+
+                {isAuthenticated && <button type="button" class="btn btn-primary" onClick={() => logout()}>Log out</button>}
               </div>
           </Form>
         </Navbar.Collapse>
