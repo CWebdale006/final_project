@@ -1,14 +1,17 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+
+// auth0
+import { useAuth0 } from "../react-auth0-spa";
 
 export default class CreateDestination extends Component {
   constructor(props) {
     super(props);
   
-    this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+    // this.onChangeUsername = this.onChangeUsername.bind(this);
+    // this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeFrom = this.onChangeFrom.bind(this);
     this.onChangeTo = this.onChangeTo.bind(this);
     this.onChangeDepartDate = this.onChangeDepartDate.bind(this);
@@ -18,8 +21,8 @@ export default class CreateDestination extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
-      password: '',
+      // username: '',
+      // password: '',
       from: '',
       to: '',
       departDate: new Date(),
@@ -39,33 +42,33 @@ export default class CreateDestination extends Component {
   // }
 
   // data from database 
-  componentDidMount() {
-    axios.get('http://localhost:5000/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            users: response.data.map(user => user.username),
-            username: response.data[0].username,
-            password: response.data.map(password => password.password)
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
+  // componentDidMount() {
+  //   axios.get('http://localhost:5000/users/')
+  //     .then(response => {
+  //       if (response.data.length > 0) {
+  //         this.setState({
+  //           users: response.data.map(user => user.username),
+  //           username: response.data[0].username,
+  //           password: response.data.map(password => password.password)
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     })
+  // }
   
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value
-    });
-  }
+  // onChangeUsername(e) {
+  //   this.setState({
+  //     username: e.target.value
+  //   });
+  // }
 
-  onChangePassword(e) {
-    this.setState({
-      password: e.target.value
-    })
-  }
+  // onChangePassword(e) {
+  //   this.setState({
+  //     password: e.target.value
+  //   })
+  // }
 
   onChangeFrom(e) {
     this.setState({
@@ -107,8 +110,8 @@ export default class CreateDestination extends Component {
     e.preventDefault();
 
     const destination = {
-      username: this.state.username,
-      password: this.state.password,
+      // username: this.state.username,
+      // password: this.state.password,
       from: this.state.from, 
       to: this.state.to,
       departDate: this.state.departDate,
@@ -127,6 +130,24 @@ export default class CreateDestination extends Component {
 
   render() {
     let price = this.state.onChangePrice;
+
+    // auth0
+    const BookUser = () => {
+      const { loading, user } = useAuth0();
+
+      if (loading || !user) {
+        return <div className="alert alert-warning" role="alert">not logged in</div>
+      }
+
+      return (
+        <Fragment>
+          <div className="alert alert-dark" role="alert">
+            {user.name}
+          </div>
+        </Fragment>
+      )
+    }
+
     return (
       <>
         <div className="card" id="hehe">
@@ -138,7 +159,7 @@ export default class CreateDestination extends Component {
                   <div>
                     <h3>Book a flight</h3>
                     <form onSubmit={this.onSubmit}>
-                      <div className="form-group"> 
+                      {/* <div className="form-group"> 
                         <label>Username: </label>
                         <select ref="userInput"
                             required
@@ -162,6 +183,18 @@ export default class CreateDestination extends Component {
                               className="form-control"
                               onChange={this.onChangePassword}
                           />
+                      </div> */}
+                      <div className="form-group">
+                        <div className="container">
+                          <div className="row">
+                            <div className="col-sm d-flex justify-content-start" id="bookLabel">
+                              <label>Booking for:</label>
+                            </div>
+                            <div className="col-6 d-flex justify-content-end">
+                              <BookUser />
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div className="form-group"> 
                         <label>From: </label>

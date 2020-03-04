@@ -127,7 +127,7 @@ export default class DestinationsList extends Component {
 
   render() {
     const HeaderText = () => {
-      const { loading, user, isAuthenticated } = useAuth0();
+      const { loading, user } = useAuth0();
 
       if (loading || !user) {
         return <div>Book a flight</div>;
@@ -135,7 +135,7 @@ export default class DestinationsList extends Component {
 
       return (
         <Fragment>
-          Welcome, {user.name}!
+          Welcome, {user.given_name}!
         </Fragment>
       )
     }
