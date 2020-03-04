@@ -2,6 +2,7 @@
 
 import React, { Fragment } from "react";
 import { useAuth0 } from "../react-auth0-spa";
+import "../css/profile.css";
 
 const Profile = () => {
   const { loading, user } = useAuth0();
@@ -12,10 +13,27 @@ const Profile = () => {
 
   return (
     <Fragment>
-      <img src={user.picture} alt="Profile" />
+      <div class="container">
+        <div class="row profile">
+          <div class="col-md-3"></div>
+          <div class="col-md-6">
+            <div class="profile-sidebar">
+              <div class="profile-userpic d-flex justify-content-center">
+                <img src={user.picture} class="img-responsive" alt="Profile" />
+              </div>
+              <div class="profile-usertitle">
+                <div class="profile-usertitle-name">
+                  {user.name}<br /><br />
+                  Email: {user.email}<br /><br />
+                  Tickets: 
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-3"></div>
+      </div>
+      </div>
 
-      <h2>{user.name}</h2>
-      <p>{user.email}</p>
       <code>{JSON.stringify(user, null, 2)}</code>
     </Fragment>
   );
