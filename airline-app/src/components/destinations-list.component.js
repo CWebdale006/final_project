@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import "../css/destinations-list.css";
 import { round } from 'mathjs';
+import PrivateRoute from "./PrivateRoute";
 
 // auth0
 import { useAuth0 } from "../react-auth0-spa";
+import EditDestination from './edit-destination.component';
 
 const Profile = () => {
   const { loading, user } = useAuth0();
@@ -17,20 +19,35 @@ const Profile = () => {
 
 let topText = "Book your flight";
 
-const Destination = props => (
-  <tr id={props.destination.to}>
-    <td>{props.destination.from}</td>
-    <td>{props.destination.to}</td>
-    <td>{props.destination.departDate.substring(0,10)}</td>
-    <td>{props.destination.returnDate.substring(0,10)}</td>
-    <td>{props.destination.price}</td>
-    <td>
-      {/*first link goes to the edit route, second calls the delete method */}
-      {/* <Link to={"/edit/"+props.destination._id}>edit</Link> | <a href="#" onClick={() => { props.deleteDestination(props.destination._id) }}>delete</a> */}
-      <Link to={'/edit/'+props.destination._id}>Purchase</Link>
-    </td>
-  </tr>
-)
+const Destination = props => {
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
+
+  return (
+    <tr id={props.destination.to}>
+      <td>{props.destination.from}</td>
+      <td>{props.destination.to}</td>
+      <td>{props.destination.departDate.substring(0,10)}</td>
+      <td>{props.destination.returnDate.substring(0,10)}</td>
+      <td>{props.destination.price}</td>
+      <td>
+        {/*first link goes to the edit route, second calls the delete method */}
+        {/* <Link to={"/edit/"+props.destination._id}>edit</Link> | <a href="#" onClick={() => { props.deleteDestination(props.destination._id) }}>delete</a> */}
+        {/* <Link to={'/edit/'+props.destination._id}>Purchase</Link> */}
+        <div>
+          {!isAuthenticated && (
+            <button type="button" class="btn btn-primary" onClick={() => loginWithRedirect({})}>Purchase</button>
+          )}
+
+          {isAuthenticated && (
+            <span>
+              <button type="button" class="btn btn-primary"><Link id="link" to={'/edit/'+props.destination._id}>Purchase</Link></button>
+            </span>
+          )}
+        </div>
+      </td>
+    </tr>
+  )
+}
 
 // getting the weather 
 function Weather(to) {
