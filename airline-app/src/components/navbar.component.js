@@ -3,6 +3,7 @@ import { useAuth0 } from "../react-auth0-spa";
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Form, Button } from 'react-bootstrap';
 import '../css/navbar.css';
+import "./ExternalApi";
 
 const Mynav = () => {
     const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
@@ -34,6 +35,7 @@ const Mynav = () => {
                 {isAuthenticated && (
                   <span>
                     <button type="button" class="btn btn-primary"><Link id="link" to="/profile">Profile</Link></button>
+                    <button type="button" class="btn btn-primary"><Link id="link" to="/external-api">External API</Link></button>
                   </span>
                 )}
 
