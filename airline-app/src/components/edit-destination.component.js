@@ -59,6 +59,24 @@ export default class EditDestination extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    const bookedTickets = {
+      from: this.state.from,
+      to: this.state.to,
+      departDate: this.state.departDate,
+      returnDate: this.state.returnDate,
+      price: this.state.price,
+      amount: this.state.amount
+    };
+
+    axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093')
+      .then(
+        { "user_metadata" : { "tickets": {bookedTickets} }}
+      );
+
+    /** 
+     * { "user_metadata" : { "tickets": {bookedTickets} }}
+     */
+
     /** use the auth0 API */
     // const user = {
     //   username: this.state.username,
@@ -127,7 +145,7 @@ export default class EditDestination extends Component {
             </div>
             <div className="form-group"> 
               <label>Price: </label>
-                <p id="ticketPrice">${price}</p>
+                {/* <p id="ticketPrice">${price}</p> */}
             </div>
             <div className="form-group" id="amountInput"> 
               <label>Amount: </label>

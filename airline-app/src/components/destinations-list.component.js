@@ -9,14 +9,6 @@ import PrivateRoute from "./PrivateRoute";
 import { useAuth0 } from "../react-auth0-spa";
 import EditDestination from './edit-destination.component';
 
-const Profile = () => {
-  const { loading, user } = useAuth0();
-
-  if (loading || !user) {
-    return <div>Loading...</div>
-  }
-}
-
 let topText = "Book your flight";
 
 const Destination = props => {
