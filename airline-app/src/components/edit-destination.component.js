@@ -85,7 +85,22 @@ export default class EditDestination extends Component {
       amount: this.state.amount
     };
 
-    const token = "";
+    const GetToken = () => {
+      const { getTokenSilently } = useAuth0();
+      const callApi = async () => {
+        try {
+          const token = await getTokenSilently();
+          return token;
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      callApi();
+    }
+
+    const token = GetToken();
+
+    console.log(token);
 
     const config = {
       headers: { Authorization: `Bearer ${token}`}
@@ -97,9 +112,9 @@ export default class EditDestination extends Component {
     }
 
     axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093', body, config)
-      .then(
-        console.log('tickets have been booked!')
-    );
+      .then(response=>{
+        console.log(response.status)
+      });
 
     /** 
      * { "user_metadata" : { "tickets": {bookedTickets} }}
