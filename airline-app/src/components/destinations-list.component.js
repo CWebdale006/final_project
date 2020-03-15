@@ -25,17 +25,15 @@ const Destination = props => {
         {/*first link goes to the edit route, second calls the delete method */}
         {/* <Link to={"/edit/"+props.destination._id}>edit</Link> | <a href="#" onClick={() => { props.deleteDestination(props.destination._id) }}>delete</a> */}
         {/* <Link to={'/edit/'+props.destination._id}>Purchase</Link> */}
-        <div>
           {!isAuthenticated && (
-            <button type="button" class="btn btn-primary" onClick={() => loginWithRedirect({})}>Purchase</button>
+            <button type="button" className="btn btn-primary" onClick={() => loginWithRedirect({})}>Purchase</button>
           )}
 
           {isAuthenticated && (
-            <span>
-              <button type="button" class="btn btn-primary"><Link id="link" to={'/edit/'+props.destination._id}>Purchase</Link></button>
-            </span>
+              <button type="button" className="btn btn-primary">
+                <Link id="link" to={'/edit/'+props.destination._id}>Purchase</Link>
+              </button>
           )}
-        </div>
       </td>
     </tr>
   )
