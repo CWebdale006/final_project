@@ -32,11 +32,11 @@ function App() {
           {/* path sets the url path, and the component is the code that is loaded when the user goes to that path */}
           <Switch>
             <Route path="/" exact component={DestinationsList} />
-            <Route path="/edit/:id" component={NewEditDestination} />
+            <Route path="/edit/:id" component={EditDestination} />
             <Route path="/create" component={CreateDestination} />
             <Route path="/user" component={CreateUser} />
             <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/edit" component={NewEditDestination} />
+            <PrivateRoute path="/edit" component={EditDestination} />
             <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
         </div>

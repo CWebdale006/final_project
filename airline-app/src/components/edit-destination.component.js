@@ -86,17 +86,42 @@ export default class EditDestination extends Component {
     };
 
     const GetToken = () => {
-      const { getTokenSilently } = useAuth0();
-      const callApi = async () => {
-        try {
-          const token = await getTokenSilently();
-          return token;
-        } catch (error) {
-          console.error(error);
+      var request = require("request");
+
+      var options = {
+        method: 'POST',
+        url: 'https://dev-0anjj2er.auth0.com/oauth/token',
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+        form: {
+          grant_type: 'client_credentials',
+          client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz',
+          client_secret: '',
+          audience: 'https://dev-0anjj2er.auth0.com/api/v2/'
         }
-      }
-      callApi();
+      };
+
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
+      });
     }
+      
+    //   axios({
+    //     method: 'post',
+    //     url: 'https://dev-0anjj2er.auth0.com/oauth/token',
+    //     headers: {
+    //       'content-type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: '{"client_id":"ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz","client_secret":"ryzNnjeIteum4CXqVd2EHhAeo2nrytWjE9k16cMxwu69XkwMoi-fB73FtKd5sz7w","audience":"https://dev-0anjj2er.auth0.com/api/v2/","grant_type":"client_credentials"}' 
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   })
+    // }
 
     const token = GetToken();
 
@@ -114,6 +139,9 @@ export default class EditDestination extends Component {
     axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093', body, config)
       .then(response=>{
         console.log(response.status)
+      })
+      .catch(function(error) {
+        console.log(error);
       });
 
     /** 
@@ -143,6 +171,7 @@ export default class EditDestination extends Component {
         <>
           <div>
           <h3>Edit Flight</h3>
+          <h6>*class component*</h6>
           <form onSubmit={this.onSubmit}>
             <div className="form-group"> 
               <label>Booking for:  </label>
