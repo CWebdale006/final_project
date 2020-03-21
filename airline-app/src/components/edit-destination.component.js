@@ -7,6 +7,13 @@ import axios from 'axios';
 import { useAuth0 } from "../react-auth0-spa";
 // import value of the token
 // import token from "./GetToken";
+import createAuth0Client from '@auth0/auth0-spa-js';
+
+
+// const auth0 = await createAuth0CLient({
+//   domain: 'dev-0anjj234.auth0.com',
+//   client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgc'
+// });
 
 // function helpMe() {
   // const { getTokenSilently } = useAuth0();
@@ -85,27 +92,61 @@ export default class EditDestination extends Component {
       amount: this.state.amount
     };
 
-    const GetToken = () => {
-      var request = require("request");
+    createAuth0Client({
+      domain: 'dev-0anjj2er.auth0.com',
+      client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz'
+    }).then(auth0 => {
+      auth0
+        .getTokenSilently()
+        .then(accessToken => 
+          // fetch('https://dev-0anjj2er.auth0.com/api/v2/', {
+          //   method: 'GET',
+          //   headers: {
+          //     Authorization: 'Bearer ' + accessToken
+          //   }
+          // })
+          axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093', {
+            headers: {
+              Authorization: 'Bearer ' + accessToken
+            }, 
+            body: {
+              "user_metadata": { "welp": "sent with promises and access tokens"}
+            }
+          })
+            .then(response=> {
+              console.log(response.status)
+            })
+            .catch(function(error) {
+              console.log("hey monkey, the error is: "+error);
+            })
+        )
+        .then(result => result.json())
+        .then(data => {
+          console.log(data);
+        });
+    })
 
-      var options = {
-        method: 'POST',
-        url: 'https://dev-0anjj2er.auth0.com/oauth/token',
-        headers: {'content-type': 'application/x-www-form-urlencoded'},
-        form: {
-          grant_type: 'client_credentials',
-          client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz',
-          client_secret: '',
-          audience: 'https://dev-0anjj2er.auth0.com/api/v2/'
-        }
-      };
+    // const GetToken = () => {
+    //   var request = require("request");
 
-      request(options, function (error, response, body) {
-        if (error) throw new Error(error);
+    //   var options = {
+    //     method: 'POST',
+    //     url: 'https://dev-0anjj2er.auth0.com/oauth/token',
+    //     headers: {'content-type': 'application/x-www-form-urlencoded'},
+    //     form: {
+    //       grant_type: 'client_credentials',
+    //       client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz',
+    //       client_secret: '',
+    //       audience: 'https://dev-0anjj2er.auth0.com/api/v2/'
+    //     }
+    //   };
 
-        console.log(body);
-      });
-    }
+    //   request(options, function (error, response, body) {
+    //     if (error) throw new Error(error);
+
+    //     console.log(body);
+    //   });
+    // }
       
     //   axios({
     //     method: 'post',
@@ -113,7 +154,7 @@ export default class EditDestination extends Component {
     //     headers: {
     //       'content-type': 'application/x-www-form-urlencoded'
     //     },
-    //     body: '{"client_id":"ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz","client_secret":"ryzNnjeIteum4CXqVd2EHhAeo2nrytWjE9k16cMxwu69XkwMoi-fB73FtKd5sz7w","audience":"https://dev-0anjj2er.auth0.com/api/v2/","grant_type":"client_credentials"}' 
+    //     body: '{"client_id":"ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz","client_secret":"","audience":"https://dev-0anjj2er.auth0.com/api/v2/","grant_type":"client_credentials"}' 
     //   })
     //   .then(function (response) {
     //     console.log(response);
@@ -123,26 +164,26 @@ export default class EditDestination extends Component {
     //   })
     // }
 
-    const token = GetToken();
+    // const token = GetToken();
 
-    console.log(token);
+    // console.log(token);
 
-    const config = {
-      headers: { Authorization: `Bearer ${token}`}
-    }
+    // const config = {
+    //   headers: { Authorization: `Bearer ${token}`}
+    // }
 
-    const body = {
-      // "user_metadata" : { "tickets": {bookedTickets} }
-      "user_metadata" : { "tickets": "bruh" }
-    }
+    // const body = {
+    //   // "user_metadata" : { "tickets": {bookedTickets} }
+    //   "user_metadata" : { "tickets": "bruh" }
+    // }
 
-    axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093', body, config)
-      .then(response=>{
-        console.log(response.status)
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    // axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093', body, config)
+    //   .then(response=>{
+    //     console.log(response.status)
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
 
     /** 
      * { "user_metadata" : { "tickets": {bookedTickets} }}

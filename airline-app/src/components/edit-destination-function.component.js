@@ -59,15 +59,22 @@ const NewEditDestination = () => {
     function getToken() {
         var request = require("request");
 
-        var options = { method: 'POST',
+        var options = {
+        method: 'POST',
         url: 'https://dev-0anjj2er.auth0.com/oauth/token',
-        headers: { 'content-type': 'application/json' },
-        body: '{"client_id":"TGdihficM3i5pLvcQG5VTgWL0Uy5YDoE","client_secret":"","audience":"https://dev-0anjj2er.auth0.com/api/v2/","grant_type":"client_credentials"}' };
+        headers: {'content-type': 'application/x-www-form-urlencoded'},
+        form: {
+            grant_type: 'client_credentials',
+            client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz',
+            client_secret: '',
+            audience: 'https://dev-0anjj2er.auth0.com/api/v2/'
+        }
+        };
 
         request(options, function (error, response, body) {
-            if (error) throw new Error(error);
-            token = body;
-            console.log(body);
+        if (error) throw new Error(error);
+
+        console.log(body);
         });
     }
 

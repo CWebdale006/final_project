@@ -25,3 +25,7 @@ yarn-error.log*
 
 # auth0 info
 auth_config.json
+
+#mkcert
+localhost-key.pem
+localhost.pem

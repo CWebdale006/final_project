@@ -4,6 +4,13 @@ const mongoose = require('mongoose');
 const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 
+// certificates from auth0
+const https = require('https');
+const fs = require('fs');
+
+const key = fs.readFileSync('./localhost-key.pem');
+const cert = fs.readFileSync('./localhost.pem');
+
 require('dotenv').config();
 
 const app = express();
@@ -60,6 +67,34 @@ app.get("/api/external", checkJwt, (req ,res) => {
     });
 });
 
+/** 
+ * this code gonna be for certification, mkcert, that kinda thing 
+ * : )
+ */
+const { auth } = require("express-openid-connect");
+
+// who knows if this will work 
+const clientSecret = process.env.CLIENT_SECRET;
+
+const appSessionSecret = process.env.APP_SECRET;
+
+const config = {
+    required: false, 
+    auth0Logout: true, 
+    baseURL: "http://localhost:3000",
+    issuerBaseURL: "https://dev-0anjj2er.auth0.com",
+    clientID: clientSecret,
+    appSessionSecret: appSessionSecret
+};
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided form the auth router 
+app.get("/", (req,res) => {
+    res.send(req.isAuthenticated() ? "Logged in" : "Logged out");
+});
+
 
 // var request = requre("request");
 
@@ -98,6 +133,10 @@ app.get("/api/external", checkJwt, (req ,res) => {
 //     }
 // }
 
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
+
+// app.listen(port, () => {
+//     console.log(`Server is running on port: ${port}`);
+// });
+https.createServer({key, cert}, app).listen('3000', () => {
+    console.log('Listening on http://localhost:3000');
 });
