@@ -5,24 +5,41 @@ import axios from 'axios';
 
 // auth0
 import { useAuth0 } from "../react-auth0-spa";
+// import value of the token
+// import token from "./GetToken";
+import createAuth0Client from '@auth0/auth0-spa-js';
+
+
+// const auth0 = await createAuth0CLient({
+//   domain: 'dev-0anjj234.auth0.com',
+//   client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgc'
+// });
+
+// function helpMe() {
+  // const { getTokenSilently } = useAuth0();
+
+  // const callApi = async () => {
+  //   try {
+  //     const token = await getTokenSilently();
+  //     return token
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
+  // callApi()
+// }
+
 
 export default class EditDestination extends Component {
   constructor(props) {
     super(props);
   
-    // this.onChangeUsername = this.onChangeUsername.bind(this);
-    // this.onChangeId = this.onChangeId.bind(this);
-    // this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeDepartDate = this.onChangeDepartDate.bind(this);
     this.onChangeReturnDate = this.onChangeReturnDate.bind(this);
     this.onChangeAmount = this.onChangeAmount.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
-      id: '',
-      password: '',
-      passwords: [],
       departDate: new Date(),
       returnDate: new Date(),
       users: []
@@ -43,38 +60,7 @@ export default class EditDestination extends Component {
       .catch(function (error) {
         console.log(error);
       })
-
-      // axios.get('http://localhost:5000/users/')
-      //   .then(response => {
-      //     this.setState({
-      //       users: response.data.map(user => user.username),
-      //       passwords: response.data.map(user => user.password),
-      //       ids: response.data.map(user => user._id)
-      //     });
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   })
   }
-
-  
-  // onChangeUsername(e) {
-  //   this.setState({
-  //     username: e.target.value
-  //   });
-  // }
-
-  // onChangeId(e) {
-  //   this.setState({
-  //     id: e.target.id
-  //   });
-  // }
-
-  // onChangePassword(e) {
-  //   this.setState({
-  //     password: e.target.value
-  //   });
-  // }
   
   onChangeDepartDate(date) {
     this.setState({
@@ -97,6 +83,112 @@ export default class EditDestination extends Component {
   onSubmit(e) {
     e.preventDefault();
 
+    const bookedTickets = {
+      from: this.state.from,
+      to: this.state.to,
+      departDate: this.state.departDate,
+      returnDate: this.state.returnDate,
+      price: this.state.price,
+      amount: this.state.amount
+    };
+
+    createAuth0Client({
+      domain: 'dev-0anjj2er.auth0.com',
+      client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz'
+    }).then(auth0 => {
+      auth0
+        .getTokenSilently()
+        .then(accessToken => 
+          // fetch('https://dev-0anjj2er.auth0.com/api/v2/', {
+          //   method: 'GET',
+          //   headers: {
+          //     Authorization: 'Bearer ' + accessToken
+          //   }
+          // })
+          axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093', {
+            headers: {
+              Authorization: 'Bearer ' + accessToken
+            }, 
+            body: {
+              "user_metadata": { "welp": "sent with promises and access tokens"}
+            }
+          })
+            .then(response=> {
+              console.log(response.status)
+            })
+            .catch(function(error) {
+              console.log("hey monkey, the error is: "+error);
+            })
+        )
+        .then(result => result.json())
+        .then(data => {
+          console.log(data);
+        });
+    })
+
+    // const GetToken = () => {
+    //   var request = require("request");
+
+    //   var options = {
+    //     method: 'POST',
+    //     url: 'https://dev-0anjj2er.auth0.com/oauth/token',
+    //     headers: {'content-type': 'application/x-www-form-urlencoded'},
+    //     form: {
+    //       grant_type: 'client_credentials',
+    //       client_id: 'ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz',
+    //       client_secret: '',
+    //       audience: 'https://dev-0anjj2er.auth0.com/api/v2/'
+    //     }
+    //   };
+
+    //   request(options, function (error, response, body) {
+    //     if (error) throw new Error(error);
+
+    //     console.log(body);
+    //   });
+    // }
+      
+    //   axios({
+    //     method: 'post',
+    //     url: 'https://dev-0anjj2er.auth0.com/oauth/token',
+    //     headers: {
+    //       'content-type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: '{"client_id":"ZR4PTrsgBY4zf2k24dZSq41MaGDLWgcz","client_secret":"","audience":"https://dev-0anjj2er.auth0.com/api/v2/","grant_type":"client_credentials"}' 
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   })
+    // }
+
+    // const token = GetToken();
+
+    // console.log(token);
+
+    // const config = {
+    //   headers: { Authorization: `Bearer ${token}`}
+    // }
+
+    // const body = {
+    //   // "user_metadata" : { "tickets": {bookedTickets} }
+    //   "user_metadata" : { "tickets": "bruh" }
+    // }
+
+    // axios.patch('https://dev-0anjj2er.auth0.com/api/v2/users/google-oauth2%7C116658177472204313093', body, config)
+    //   .then(response=>{
+    //     console.log(response.status)
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+
+    /** 
+     * { "user_metadata" : { "tickets": {bookedTickets} }}
+     */
+
     /** use the auth0 API */
     // const user = {
     //   username: this.state.username,
@@ -116,107 +208,80 @@ export default class EditDestination extends Component {
 
 
   render() {
-    let price = this.state.price;
-
-    // auth0
-    const UserName = () => {
-      const { loading, user } = useAuth0();
-
-      if (loading || !user) {
-        return <div>Loading...</div>
-      }
-
       return (
-        <Fragment>
+        <>
           <div>
-            {user.name}
-          </div>
-        </Fragment>
+          <h3>Edit Flight</h3>
+          <h6>*class component*</h6>
+          <form onSubmit={this.onSubmit}>
+            <div className="form-group"> 
+              <label>Booking for:  </label>
+              {/* <UserName /> */}
+            </div>
+            <div className="form-group"> 
+              <label>From: </label>
+              <input  type="text"
+                required
+                className="form-control"
+                value={this.state.from}
+                onChange={this.onChangeFrom}
+                readOnly
+              />
+            </div>
+            <div className="form-group"> 
+              <label>To: </label>
+                <input  type="text"
+                  required
+                  className="form-control"
+                  value={this.state.to}
+                  onChange={this.onChangeTo}
+                  readOnly
+                />
+            </div>
+            <div className="form-group"> 
+              <label>Depart date: </label>
+              <div>
+                <DatePicker 
+                  selected={this.state.departDate}
+                  onChange={this.onChangeDepartDate}
+                />
+              </div>
+            </div>
+            <div className="form-group">
+              <label>Return date: </label>
+              <div>
+                <DatePicker 
+                  selected={this.state.returnDate}
+                  onChange={this.onChangeReturnDate}
+                />
+              </div>
+            </div>
+            <div className="form-group"> 
+              <label>Price: </label>
+                {/* <p id="ticketPrice">${price}</p> */}
+            </div>
+            <div className="form-group" id="amountInput"> 
+              <label>Amount: </label>
+              <input  type="number"
+                  min="0"
+                  max="20"
+                  required
+                  className="form-control"
+                  value={this.state.amount}
+                  onChange={this.onChangeAmount}
+                  />
+            </div>
+
+            <div className="form-group">
+              <input type="submit" value="Book tickets" className="btn btn-primary" />
+            </div>
+          </form>
+        </div>
+        </>
       )
     }
-
-    return (
-      // <>
-      //   <div>
-      //   <h3>Edit Flight</h3>
-      //   <form onSubmit={this.onSubmit}>
-      //     <div className="form-group"> 
-      //       <label>Booking for:  </label>
-      //       <UserName />
-      //       {/* <select ref="userInput"
-      //           className="form-control"
-      //           value={this.state.username}
-      //           onChange={this.onChangeUsername}>
-      //           {
-      //             this.state.users.map(function(user) {
-      //               return <option 
-      //                 key={user}
-      //                 value={user}>{user}
-      //                 </option>;
-      //             })
-      //           }
-      //       </select> */}
-      //     </div>
-      //     <div className="form-group"> 
-      //       <label>From: </label>
-      //       <input  type="text"
-      //         required
-      //         className="form-control"
-      //         value={this.state.from}
-      //         onChange={this.onChangeFrom}
-      //         readOnly
-      //       />
-      //     </div>
-      //     <div className="form-group"> 
-      //       <label>To: </label>
-      //         <input  type="text"
-      //           required
-      //           className="form-control"
-      //           value={this.state.to}
-      //           onChange={this.onChangeTo}
-      //           readOnly
-      //         />
-      //     </div>
-      //     <div className="form-group"> 
-      //       <label>Depart date: </label>
-      //       <div>
-      //         <DatePicker 
-      //           selected={this.state.departDate}
-      //           onChange={this.onChangeDepartDate}
-      //         />
-      //       </div>
-      //     </div>
-      //     <div className="form-group">
-      //       <label>Return date: </label>
-      //       <div>
-      //         <DatePicker 
-      //           selected={this.state.returnDate}
-      //           onChange={this.onChangeReturnDate}
-      //         />
-      //       </div>
-      //     </div>
-      //     <div className="form-group"> 
-      //       <label>Price: </label>
-      //         <p id="ticketPrice">${price}</p>
-      //     </div>
-      //     <div className="form-group" id="amountInput"> 
-      //       <label>Amount: </label>
-      //       <input  type="number"
-      //           min="0"
-      //           max="20"
-      //           required
-      //           className="form-control"
-      //           value={this.state.amount}
-      //           onChange={this.onChangeAmount}
-      //           />
-      //     </div>
-
-      //     <div className="form-group">
-      //       <input type="submit" value="Book tickets" className="btn btn-primary" />
-      //     </div>
-      //   </form>
-      // </div>
-      // </>
-    )
   }
-}
+
+    // return (
+      
+    // )

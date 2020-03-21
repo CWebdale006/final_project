@@ -13,4 +13,4 @@ to do:
         users would cancel or refund a flight 
 
 ideas: 
-    tickets might be able to be stored as an object, have fun with that 
+    do the same thing as before to get tokens, but rename the functions so they begin with capital letters 

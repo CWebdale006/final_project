@@ -10,6 +10,7 @@ import CreateDestination from "./components/create-destination.component";
 import CreateUser from "./components/create-user.component";
 import SearchDestination from "./components/search-destination.component";
 import Footer from "./components/footer.component";
+import NewEditDestination from "./components/edit-destination-function.component";
 
 // auth0
 import { useAuth0 } from "./react-auth0-spa";
@@ -18,6 +19,7 @@ import { useAuth0 } from "./react-auth0-spa";
     import Profile from "./components/Profile.component";
     import history from "./utils/history";
     import PrivateRoute from "./components/PrivateRoute";
+    import ExternalApi from "./components/ExternalApi";
 
 function App() {
   return (
@@ -34,7 +36,8 @@ function App() {
             <Route path="/create" component={CreateDestination} />
             <Route path="/user" component={CreateUser} />
             <PrivateRoute path="/profile" component={Profile} />
-            <PrivateRoute path="/edit/" component={EditDestination} />
+            <PrivateRoute path="/edit" component={EditDestination} />
+            <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
         </div>
       </Router>
