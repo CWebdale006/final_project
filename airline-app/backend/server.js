@@ -8,8 +8,10 @@ const jwksRsa = require("jwks-rsa");
 const https = require('https');
 const fs = require('fs');
 
-const key = fs.readFileSync('./localhost-key.pem');
-const cert = fs.readFileSync('./localhost.pem');
+// const key = fs.readFileSync('./localhost-key.pem');
+const key = fs.readFileSync('../../localhost-key.pem')
+// const cert = fs.readFileSync('./localhost.pem');
+const cert = fs.readFileSync('../../localhost.pem')
 
 require('dotenv').config();
 
